@@ -1,0 +1,6 @@
+## 1.6. Phương pháp nghiên cứu
+
+Khóa luận sử dụng kết hợp phương pháp nghiên cứu định lượng và định tính, trong đó tập trung chính vào phương pháp thu thập dữ liệu sơ cấp thông qua khảo sát bảng hỏi.
+- Dữ liệu thứ cấp: Thu thập và phân tích từ các nguồn tài liệu chính thức như báo cáo của Sở Du lịch TP. Hồ Chí Minh, UBND huyện Củ Chi và xã Củ Chi, số liệu thống kê du lịch các năm 2019–2025, các văn bản quy hoạch phát triển du lịch của Thành phố, tài liệu khoa học trong nước và quốc tế từ các tạp chí uy tín, cơ sở dữ liệu UNWTO, GSTC.
+- Dữ liệu sơ cấp: Khảo sát bảng hỏi: Thiết kế bảng hỏi có cấu trúc với thang đo Likert 5 mức độ để thu thập ý kiến đánh giá của du khách, người dân và doanh nghiệp địa phương về thực trạng phát triển du lịch nông nghiệp theo hướng du lịch xanh. Dự kiến khảo sát khoảng 150–200 mẫu (phân bổ hợp lý giữa du khách và đối tượng địa phương). Mẫu được chọn theo phương pháp ngẫu nhiên phân tầng. Dữ liệu sau khi thu thập sẽ được xử lý bằng phần mềm SPSS và Excel để phân tích thống kê mô tả, kiểm định độ tin cậy (Cronbach’s Alpha) và các phân tích đa biến cần thiết.
+Các phương pháp phân tích được sử dụng bao gồm: SWOT, PESTLE, ma trận đánh giá và phân tích nguyên nhân gốc rễ (Root Cause Analysis). Đảm bảo tính khoa học, khách quan và tuân thủ các nguyên tắc đạo đức nghiên cứu.

@@ -1,0 +1,4 @@
+## 1.7. Khung lý thuyết nghiên cứu và khoảng trống nghiên cứu
+
+Khung lý thuyết tổng hợp của nghiên cứu kết hợp Lý thuyết phát triển bền vững làm nền tảng triết lý, sử dụng SWOT/PESTLE để phân tích thực trạng, Chuỗi giá trị để đánh giá hiệu quả kinh tế và Quản trị dịch vụ để đề xuất giải pháp. Khung này được xây dựng nhằm đảm bảo tính logic từ lý luận đến thực tiễn, phù hợp với đối tượng là du lịch nông nghiệp xanh tại xã Củ Chi – một khu vực có lợi thế di sản lịch sử và nông nghiệp nhưng chưa khai thác tối đa theo hướng bền vững.
+Các nghiên cứu trước đây trong nước chủ yếu tập trung vào tổng quan du lịch nông nghiệp huyện Củ Chi (Đồng Phú Hảo, 2023) hoặc các mô hình riêng lẻ, chưa có công trình nào kết hợp sâu phân tích root cause theo hướng du lịch xanh với dữ liệu sơ cấp khảo sát và giải pháp SMART cụ thể cho cấp xã. Do đó, nghiên cứu này góp phần lấp đầy khoảng trống đó.

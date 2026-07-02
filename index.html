@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bìa luận văn Markdown</title>
+  <style>
+    :root {
+      --paper: #fffdf7;
+      --page: #eef2ed;
+      --ink: #17211b;
+      --muted: #65706a;
+      --green: #245c3d;
+      --green-soft: #dfece2;
+      --ochre: #b8872e;
+      --blue: #315c7a;
+      --rule: #d8d1c4;
+      --shadow: rgba(23, 33, 27, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(90deg, rgba(36, 92, 61, 0.07) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(36, 92, 61, 0.05) 1px, transparent 1px),
+        var(--page);
+      background-size: 32px 32px;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .shell {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+      color: var(--muted);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      border: 2px solid var(--green);
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      font-weight: 700;
+      background: rgba(255, 253, 247, 0.78);
+    }
+
+    .brand strong {
+      display: block;
+      color: var(--ink);
+      font-size: 15px;
+      letter-spacing: 0.02em;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 2px;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 56vw;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .action {
+      appearance: none;
+      border: 1px solid rgba(36, 92, 61, 0.28);
+      background: rgba(255, 253, 247, 0.86);
+      color: var(--green);
+      min-height: 38px;
+      padding: 0 13px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 650;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .action:hover {
+      background: var(--green-soft);
+    }
+
+    .action:focus-visible {
+      outline: 3px solid rgba(184, 135, 46, 0.38);
+      outline-offset: 2px;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 270px;
+      align-items: start;
+      gap: 24px;
+    }
+
+    .paper {
+      width: min(210mm, 100%);
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 28mm 24mm 24mm;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      box-shadow: 0 22px 80px var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .paper::before {
+      content: "";
+      position: absolute;
+      inset: 13mm;
+      border: 1px solid rgba(36, 92, 61, 0.36);
+      pointer-events: none;
+    }
+
+    .paper::after {
+      content: "";
+      position: absolute;
+      top: 17mm;
+      left: 50%;
+      width: 54mm;
+      height: 3px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, transparent, var(--ochre), transparent);
+      pointer-events: none;
+    }
+
+    .cover {
+      min-height: calc(297mm - 52mm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover h1 {
+      margin: 38mm 0 0;
+      max-width: 150mm;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.16;
+      letter-spacing: 0;
+      color: var(--green);
+      text-transform: uppercase;
+    }
+
+    .cover h2 {
+      margin: 16px 0 28px;
+      font-size: 16px;
+      line-height: 1.45;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .cover p {
+      margin: 7px 0;
+      max-width: 136mm;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .cover strong {
+      font-weight: 750;
+      color: var(--ink);
+    }
+
+    .cover ul {
+      width: min(136mm, 100%);
+      margin: 18px auto;
+      padding: 18px 24px;
+      border-left: 4px solid var(--green);
+      background: rgba(223, 236, 226, 0.55);
+      text-align: left;
+    }
+
+    .cover li {
+      margin: 8px 0;
+      line-height: 1.55;
+      font-size: 14.5px;
+    }
+
+    .cover hr {
+      width: 92mm;
+      border: 0;
+      border-top: 1px solid var(--rule);
+      margin: 24px auto;
+    }
+
+    .cover > p:last-child {
+      margin-top: auto;
+      padding-top: 28px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .side {
+      position: sticky;
+      top: 24px;
+      background: rgba(255, 253, 247, 0.80);
+      border: 1px solid var(--rule);
+      padding: 18px;
+      box-shadow: 0 12px 36px rgba(23, 33, 27, 0.08);
+    }
+
+    .side h2 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    .side dl {
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .side dt {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    .side dd {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .error {
+      border: 1px solid #c65f4b;
+      background: #fff0ec;
+      color: #7d2618;
+      padding: 18px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    @media (max-width: 920px) {
+      .stage {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        position: static;
+        order: -1;
+      }
+
+      .paper {
+        padding: 24mm 13mm 18mm;
+        min-height: auto;
+      }
+
+      .paper::before {
+        inset: 8mm;
+      }
+
+      .cover h1 {
+        margin-top: 22mm;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .shell {
+        width: auto;
+        padding: 0;
+      }
+
+      .topbar,
+      .side {
+        display: none;
+      }
+
+      .stage {
+        display: block;
+      }
+
+      .paper {
+        width: 210mm;
+        min-height: 297mm;
+        box-shadow: none;
+        border: 0;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">MD</div>
+        <div>
+          <strong>Bìa luận văn</strong>
+          <span id="fileLabel">cover.md</span>
+        </div>
+      </div>
+      <nav class="actions" aria-label="Thao tác">
+        <a class="action" id="openMarkdown" href="cover.md">Mở Markdown</a>
+        <button class="action" id="reloadButton" type="button">Tải lại</button>
+        <button class="action" type="button" onclick="window.print()">In</button>
+      </nav>
+    </header>
+
+    <section class="stage">
+      <article class="paper">
+        <div class="cover" id="content" aria-live="polite"></div>
+      </article>
+
+      <aside class="side">
+        <h2>Thông tin trang</h2>
+        <dl>
+          <div>
+            <dt>File nguồn</dt>
+            <dd id="sourceName">cover.md</dd>
+          </div>
+          <div>
+            <dt>Trạng thái</dt>
+            <dd id="statusText">Đang tải Markdown</dd>
+          </div>
+          <div>
+            <dt>Định dạng</dt>
+            <dd>Trang bìa A4, nội dung render trực tiếp từ Markdown.</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const markdownFile = params.get("file") || "cover.md";
+    const content = document.getElementById("content");
+    const statusText = document.getElementById("statusText");
+    const sourceName = document.getElementById("sourceName");
+    const fileLabel = document.getElementById("fileLabel");
+    const openMarkdown = document.getElementById("openMarkdown");
+    const reloadButton = document.getElementById("reloadButton");
+
+    sourceName.textContent = markdownFile;
+    fileLabel.textContent = markdownFile;
+    openMarkdown.href = markdownFile;
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function inlineMarkdown(value) {
+      return escapeHtml(value)
+        .replace(/`([^`]+)`/g, "<code>$1</code>")
+        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    }
+
+    function flushParagraph(buffer, html) {
+      if (!buffer.length) return;
+      html.push(`<p>${buffer.map((line) => inlineMarkdown(line)).join("<br>")}</p>`);
+      buffer.length = 0;
+    }
+
+    function renderMarkdown(markdown) {
+      const lines = markdown.replace(/\r\n?/g, "\n").split("\n");
+      const html = [];
+      const paragraph = [];
+      let list = [];
+
+      function flushList() {
+        if (!list.length) return;
+        html.push("<ul>");
+        list.forEach((item) => html.push(`<li>${inlineMarkdown(item)}</li>`));
+        html.push("</ul>");
+        list = [];
+      }
+
+      lines.forEach((rawLine) => {
+        const line = rawLine.trim();
+
+        if (!line) {
+          flushParagraph(paragraph, html);
+          flushList();
+          return;
+        }
+
+        if (/^---+$/.test(line)) {
+          flushParagraph(paragraph, html);
+          flushList();
+          html.push("<hr>");
+          return;
+        }
+
+        const heading = line.match(/^(#{1,6})\s+(.+)$/);
+        if (heading) {
+          flushParagraph(paragraph, html);
+          flushList();
+          const level = Math.min(heading[1].length, 6);
+          html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+          return;
+        }
+
+        const item = line.match(/^[-*]\s+(.+)$/);
+        if (item) {
+          flushParagraph(paragraph, html);
+          list.push(item[1]);
+          return;
+        }
+
+        flushList();
+        paragraph.push(line);
+      });
+
+      flushParagraph(paragraph, html);
+      flushList();
+      return html.join("\n");
+    }
+
+    async function loadMarkdown() {
+      statusText.textContent = "Đang tải Markdown";
+      content.innerHTML = "";
+
+      try {
+        const response = await fetch(markdownFile, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const markdown = await response.text();
+        content.innerHTML = renderMarkdown(markdown);
+        statusText.textContent = "Đã render";
+      } catch (error) {
+        content.innerHTML = `
+          <div class="error">
+            <strong>Không tải được file Markdown.</strong><br>
+            Trang cần được mở qua server nội bộ để trình duyệt đọc được file <code>${escapeHtml(markdownFile)}</code>.
+          </div>
+        `;
+        statusText.textContent = "Lỗi tải file";
+      }
+    }
+
+    reloadButton.addEventListener("click", loadMarkdown);
+    loadMarkdown();
+  </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+## 1.2. Đặc điểm và tiêu chí đánh giá du lịch nông nghiệp theo hướng du lịch xanh
+
+Du lịch nông nghiệp theo hướng du lịch xanh có những đặc điểm nổi bật: tính trải nghiệm cao, gắn kết với sản xuất thực tế, tính mùa vụ rõ rệt, và phụ thuộc mạnh vào tài nguyên địa phương. Theo GSTC (2025), tiêu chí đánh giá bao gồm bốn nhóm chính.
+Về môi trường, hoạt động phải giảm thiểu chất thải, bảo tồn đa dạng sinh học, sử dụng năng lượng tái tạo và quản lý nước hiệu quả. Kinh tế đòi hỏi tạo việc làm địa phương, tăng giá trị chuỗi cung ứng nông sản và phân phối lợi ích công bằng. Về xã hội - văn hóa, mô hình phải tôn trọng bản sắc cộng đồng, thúc đẩy bình đẳng giới và giáo dục du khách về di sản địa phương.
+Tại Việt Nam, Bộ Văn hóa, Thể thao và Du lịch (2024) đã ban hành các tiêu chí du lịch nông thôn gắn với tăng trưởng xanh, nhấn mạnh việc áp dụng OCOP (mỗi xã một sản phẩm) và chứng nhận hữu cơ. Những tiêu chí này đặc biệt phù hợp với xã Củ Chi – nơi có tiềm năng kết hợp di sản lịch sử Địa đạo với nông nghiệp sạch, nhưng hiện vẫn tồn tại khoảng cách trong việc áp dụng các tiêu chuẩn xanh.

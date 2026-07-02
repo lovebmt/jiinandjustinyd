@@ -1,0 +1,4 @@
+## 3.2. Giải pháp chung từ phía Nhà nước và chính quyền địa phương
+
+Để tạo nền tảng thể chế vững chắc, chính quyền các cấp cần hoàn thiện cơ chế chính sách và quy hoạch. Cụ thể, UBND TP. Hồ Chí Minh và huyện Củ Chi cần ban hành quy hoạch chi tiết phát triển du lịch nông nghiệp xanh đến năm 2035, tích hợp chặt chẽ với quy hoạch nông thôn mới và bảo tồn di sản Địa đạo Củ Chi. Đồng thời, xây dựng cơ chế ưu đãi thuế, đất đai và hỗ trợ chứng nhận xanh cho các hộ dân và doanh nghiệp tham gia (khắc phục trực tiếp hạn chế về quy hoạch và chính sách tại Chương 2).
+Về đầu tư hạ tầng, cần ưu tiên nguồn vốn công cho hệ thống xử lý nước thải sinh học, đường giao thông xanh, wifi phủ sóng và năng lượng tái tạo tại các điểm du lịch. Bên cạnh đó, các chương trình hỗ trợ vốn tín dụng ưu đãi và đào tạo nguồn nhân lực sẽ được triển khai rộng rãi thông qua hợp tác với các trường đại học và trung tâm dạy nghề.
