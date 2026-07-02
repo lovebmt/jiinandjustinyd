@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bìa luận văn Markdown</title>
+  <title>Bài luận Markdown</title>
   <style>
     :root {
       --paper: #fffdf7;
@@ -230,6 +230,116 @@
       color: var(--green);
     }
 
+    .document {
+      position: relative;
+      z-index: 1;
+      text-align: left;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+    }
+
+    .document h1,
+    .document h2,
+    .document h3,
+    .document h4 {
+      letter-spacing: 0;
+      color: var(--green);
+      font-family: Georgia, "Times New Roman", serif;
+      page-break-after: avoid;
+    }
+
+    .document h1 {
+      margin: 0 0 18px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(36, 92, 61, 0.28);
+      font-size: clamp(27px, 4vw, 40px);
+      line-height: 1.18;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .document h2 {
+      margin: 32px 0 12px;
+      font-size: 24px;
+      line-height: 1.25;
+    }
+
+    .document h3 {
+      margin: 26px 0 10px;
+      font-size: 19px;
+      line-height: 1.35;
+      color: var(--blue);
+    }
+
+    .document h4 {
+      margin: 20px 0 8px;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .document p {
+      margin: 10px 0;
+      font-size: 15.5px;
+      line-height: 1.68;
+    }
+
+    .document ul {
+      margin: 10px 0 16px;
+      padding-left: 26px;
+    }
+
+    .document li {
+      margin: 7px 0;
+      font-size: 15px;
+      line-height: 1.58;
+    }
+
+    .document hr {
+      width: 100%;
+      border: 0;
+      border-top: 1px solid var(--rule);
+      margin: 24px 0;
+    }
+
+    .document blockquote {
+      margin: 18px 0;
+      padding: 12px 16px;
+      border-left: 4px solid var(--ochre);
+      background: rgba(223, 236, 226, 0.45);
+      color: var(--muted);
+    }
+
+    .document figure {
+      margin: 24px auto;
+      padding: 12px;
+      border: 1px solid rgba(36, 92, 61, 0.18);
+      background: #ffffff;
+      page-break-inside: avoid;
+    }
+
+    .document figure img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .document figcaption {
+      margin-top: 8px;
+      text-align: center;
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .document a {
+      color: var(--blue);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
     .side {
       position: sticky;
       top: 24px;
@@ -334,12 +444,12 @@
       <div class="brand">
         <div class="mark">MD</div>
         <div>
-          <strong>Bìa luận văn</strong>
-          <span id="fileLabel">cover.md</span>
+          <strong>Bài luận Markdown</strong>
+          <span id="fileLabel">luan_van_full.md</span>
         </div>
       </div>
       <nav class="actions" aria-label="Thao tác">
-        <a class="action" id="openMarkdown" href="cover.md">Mở Markdown</a>
+        <a class="action" id="openMarkdown" href="luan_van_full.md">Mở Markdown</a>
         <button class="action" id="reloadButton" type="button">Tải lại</button>
         <button class="action" type="button" onclick="window.print()">In</button>
       </nav>
@@ -347,7 +457,7 @@
 
     <section class="stage">
       <article class="paper">
-        <div class="cover" id="content" aria-live="polite"></div>
+        <div class="document" id="content" aria-live="polite"></div>
       </article>
 
       <aside class="side">
@@ -355,7 +465,7 @@
         <dl>
           <div>
             <dt>File nguồn</dt>
-            <dd id="sourceName">cover.md</dd>
+            <dd id="sourceName">luan_van_full.md</dd>
           </div>
           <div>
             <dt>Trạng thái</dt>
@@ -363,7 +473,7 @@
           </div>
           <div>
             <dt>Định dạng</dt>
-            <dd>Trang bìa A4, nội dung render trực tiếp từ Markdown.</dd>
+            <dd>Trang A4 dài, nội dung và hình ảnh render trực tiếp từ Markdown.</dd>
           </div>
         </dl>
       </aside>
@@ -372,7 +482,7 @@
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const markdownFile = params.get("file") || "cover.md";
+    const markdownFile = params.get("file") || "luan_van_full.md";
     const content = document.getElementById("content");
     const statusText = document.getElementById("statusText");
     const sourceName = document.getElementById("sourceName");
@@ -390,6 +500,10 @@
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;");
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value).replaceAll("'", "&#39;");
     }
 
     function inlineMarkdown(value) {
@@ -436,6 +550,24 @@
           return;
         }
 
+        const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+        if (image) {
+          flushParagraph(paragraph, html);
+          flushList();
+          const alt = escapeAttribute(image[1]);
+          const src = escapeAttribute(image[2]);
+          html.push(`<figure><img src="${src}" alt="${alt}" loading="lazy"><figcaption>${alt}</figcaption></figure>`);
+          return;
+        }
+
+        const quote = line.match(/^>\s+(.+)$/);
+        if (quote) {
+          flushParagraph(paragraph, html);
+          flushList();
+          html.push(`<blockquote>${inlineMarkdown(quote[1])}</blockquote>`);
+          return;
+        }
+
         const heading = line.match(/^(#{1,6})\s+(.+)$/);
         if (heading) {
           flushParagraph(paragraph, html);
@@ -471,6 +603,7 @@
           throw new Error(`HTTP ${response.status}`);
         }
         const markdown = await response.text();
+        content.className = markdownFile.endsWith("cover.md") ? "cover" : "document";
         content.innerHTML = renderMarkdown(markdown);
         statusText.textContent = "Đã render";
       } catch (error) {
