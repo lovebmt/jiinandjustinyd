@@ -34,8 +34,17 @@ assert(
   "survey panel must load the raw response CSV"
 );
 assert(
+  html.includes("du_lieu_cau_tra_loi_khao_sat.xlsx"),
+  "survey panel must include Excel download for real responses"
+);
+assert(
   html.includes("du_lieu_cau_tra_loi_khao_sat_fake_241.csv"),
   "fake survey panel must load the 241-row fake response CSV"
 );
+assert(
+  html.includes("du_lieu_cau_tra_loi_khao_sat_fake_241.xlsx"),
+  "fake survey panel must include Excel download for fake responses"
+);
+assert(html.includes("Tải Excel"), "survey panels must expose Excel download buttons");
 assert(html.includes("function parseCsv"), "homepage must include CSV parser");
 assert(html.includes("function activateTab"), "homepage must include tab switching behavior");

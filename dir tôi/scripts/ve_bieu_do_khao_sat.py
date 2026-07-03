@@ -554,6 +554,89 @@ def write_raw_responses_csv(headers: list[str], data: list[list[str]], filename:
     return path
 
 
+def column_name(index: int) -> str:
+    index += 1
+    name = ""
+    while index:
+        index, remainder = divmod(index - 1, 26)
+        name = chr(65 + remainder) + name
+    return name
+
+
+def xml_bytes(element: ET.Element) -> bytes:
+    return ET.tostring(element, encoding="utf-8", xml_declaration=True)
+
+
+def write_xlsx(headers: list[str], data: list[list[str]], filename: str) -> Path:
+    path = CURRENT_OUT_DIR / filename
+    main_ns = NS["main"]
+    rel_ns = "http://schemas.openxmlformats.org/package/2006/relationships"
+    office_rel_ns = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    ET.register_namespace("", main_ns)
+    ET.register_namespace("r", NS["rel"])
+
+    worksheet = ET.Element(f"{{{main_ns}}}worksheet")
+    sheet_data = ET.SubElement(worksheet, f"{{{main_ns}}}sheetData")
+    rows = [headers, *data]
+    for row_index, row_values in enumerate(rows, start=1):
+        row = ET.SubElement(sheet_data, f"{{{main_ns}}}row", {"r": str(row_index)})
+        for col_index, value in enumerate(row_values):
+            cell_ref = f"{column_name(col_index)}{row_index}"
+            cell = ET.SubElement(row, f"{{{main_ns}}}c", {"r": cell_ref, "t": "inlineStr"})
+            inline = ET.SubElement(cell, f"{{{main_ns}}}is")
+            text = ET.SubElement(inline, f"{{{main_ns}}}t")
+            text.text = str(value)
+            if text.text != text.text.strip():
+                text.set("{http://www.w3.org/XML/1998/namespace}space", "preserve")
+
+    workbook = ET.Element(f"{{{main_ns}}}workbook")
+    sheets = ET.SubElement(workbook, f"{{{main_ns}}}sheets")
+    ET.SubElement(
+        sheets,
+        f"{{{main_ns}}}sheet",
+        {"name": "Cau tra loi", "sheetId": "1", f"{{{NS['rel']}}}id": "rId1"},
+    )
+
+    workbook_rels = ET.Element(f"{{{rel_ns}}}Relationships")
+    ET.SubElement(
+        workbook_rels,
+        f"{{{rel_ns}}}Relationship",
+        {
+            "Id": "rId1",
+            "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+            "Target": "worksheets/sheet1.xml",
+        },
+    )
+
+    root_rels = ET.Element(f"{{{rel_ns}}}Relationships")
+    ET.SubElement(
+        root_rels,
+        f"{{{rel_ns}}}Relationship",
+        {
+            "Id": "rId1",
+            "Type": office_rel_ns + "/officeDocument",
+            "Target": "xl/workbook.xml",
+        },
+    )
+
+    content_types = """<?xml version="1.0" encoding="UTF-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  <Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>
+  <Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
+</Types>
+"""
+
+    with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr("[Content_Types].xml", content_types)
+        zf.writestr("_rels/.rels", xml_bytes(root_rels))
+        zf.writestr("xl/workbook.xml", xml_bytes(workbook))
+        zf.writestr("xl/_rels/workbook.xml.rels", xml_bytes(workbook_rels))
+        zf.writestr("xl/worksheets/sheet1.xml", xml_bytes(worksheet))
+    return path
+
+
 def write_labeled_responses_csv(headers: list[str], real_data: list[list[str]], fake_data: list[list[str]]) -> Path:
     path = CURRENT_OUT_DIR / "du_lieu_cau_tra_loi_khao_sat_fake_241.csv"
     with path.open("w", encoding="utf-8-sig", newline="") as f:
@@ -652,12 +735,18 @@ def main() -> None:
 
     set_output_dir(REAL_OUT_DIR)
     raw_csv_path = write_raw_responses_csv(headers, data)
+    raw_xlsx_path = write_xlsx(headers, data, "du_lieu_cau_tra_loi_khao_sat.xlsx")
     image_paths, csv_path, report_path = generate_chart_bundle(headers, data, raw_csv_path)
 
     fake_data = generate_fake_rows(data, 200)
     combined_data = data + fake_data
     set_output_dir(FAKE_OUT_DIR)
     fake_raw_csv_path = write_labeled_responses_csv(headers, data, fake_data)
+    fake_raw_xlsx_path = write_xlsx(
+        ["Loại dữ liệu", *headers],
+        [["Real", *row] for row in data] + [["Fake", *row] for row in fake_data],
+        "du_lieu_cau_tra_loi_khao_sat_fake_241.xlsx",
+    )
     fake_image_paths, fake_csv_path, fake_report_path = generate_chart_bundle(headers, combined_data, fake_raw_csv_path)
 
     print(f"Workbook: {workbook.name}")
@@ -667,6 +756,7 @@ def main() -> None:
         print(path.name)
     print(csv_path.name)
     print(raw_csv_path.name)
+    print(raw_xlsx_path.name)
     print(report_path.name)
     print(f"Fake responses: {len(combined_data)} (real={len(data)}, fake={len(fake_data)})")
     print(f"Fake output: {FAKE_OUT_DIR}")
@@ -674,6 +764,7 @@ def main() -> None:
         print(path.name)
     print(fake_csv_path.name)
     print(fake_raw_csv_path.name)
+    print(fake_raw_xlsx_path.name)
     print(fake_report_path.name)
 
 
