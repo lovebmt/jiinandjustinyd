@@ -14,6 +14,9 @@ assert(!html.includes("Mở Markdown"), "homepage must not show Mở Markdown bu
 assert(!html.includes("Tải lại"), "homepage must not show Tải lại button");
 assert(!html.includes("window.print()"), "homepage must not show print action");
 assert(!html.includes(">In<"), "homepage must not show In button");
+assert(!html.includes("Chạy local server"), "homepage must not show local server instruction box");
+assert(!html.includes("python3 -m http.server"), "homepage must not show local server command");
+assert(!html.includes("local-command"), "homepage must not include local server instruction class");
 assert(html.includes('id="reportPanel"'), "homepage must include report panel");
 assert(html.includes('id="surveyPanel"'), "homepage must include survey panel");
 assert(html.includes('id="fakeSurveyPanel"'), "homepage must include fake survey panel");

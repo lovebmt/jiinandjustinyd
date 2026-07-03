@@ -221,33 +221,11 @@
       line-height: 1.3;
     }
 
-    .local-command {
-      margin: 0 0 24px;
-      border-left: 4px solid var(--blue);
-      background: var(--blue-soft);
-      padding: 14px 16px;
-      color: #19384f;
-    }
-
-    .local-command h2,
     .survey-section h2 {
       margin: 0 0 10px;
       font-size: 18px;
       line-height: 1.25;
       color: var(--blue);
-    }
-
-    .command-line {
-      display: block;
-      width: 100%;
-      overflow-x: auto;
-      margin: 8px 0;
-      padding: 10px 12px;
-      background: #ffffff;
-      border: 1px solid rgba(49, 92, 122, 0.24);
-      color: var(--ink);
-      font: 13px/1.5 Menlo, Consolas, monospace;
-      white-space: nowrap;
     }
 
     .chart-grid {
@@ -610,7 +588,6 @@
 
       .topbar,
       .tabs,
-      .local-command,
       .data-actions {
         display: none;
       }
@@ -665,12 +642,6 @@
             <div class="stat"><strong>6</strong><span>biểu đồ</span></div>
           </div>
         </header>
-
-        <section class="local-command" aria-labelledby="localServerTitle">
-          <h2 id="localServerTitle">Chạy local server</h2>
-          <code class="command-line">python3 -m http.server 8001</code>
-          <code class="command-line">http://localhost:8001/</code>
-        </section>
 
         <section class="survey-section" aria-labelledby="chartTitle">
           <h2 id="chartTitle">Visualization</h2>
@@ -730,12 +701,6 @@
             <div class="stat"><strong>6</strong><span>biểu đồ</span></div>
           </div>
         </header>
-
-        <section class="local-command" aria-labelledby="fakeLocalServerTitle">
-          <h2 id="fakeLocalServerTitle">Chạy local server</h2>
-          <code class="command-line">python3 -m http.server 8001</code>
-          <code class="command-line">http://localhost:8001/#khao-sat-fake</code>
-        </section>
 
         <section class="survey-section" aria-labelledby="fakeChartTitle">
           <h2 id="fakeChartTitle">Visualization 241 mẫu</h2>
