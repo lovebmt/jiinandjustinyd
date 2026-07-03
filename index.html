@@ -16,6 +16,9 @@
       --blue: #315c7a;
       --rule: #d8d1c4;
       --shadow: rgba(23, 33, 27, 0.16);
+      --panel: #f8faf6;
+      --blue-soft: #e3edf4;
+      --danger-soft: #fff0ec;
     }
 
     * {
@@ -35,7 +38,7 @@
     }
 
     .shell {
-      width: min(980px, calc(100vw - 32px));
+      width: min(1180px, calc(100vw - 32px));
       margin: 0 auto;
       padding: 28px 0 44px;
     }
@@ -80,14 +83,6 @@
       display: none;
     }
 
-    .actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
     .action {
       appearance: none;
       border: 1px solid rgba(36, 92, 61, 0.28);
@@ -118,6 +113,43 @@
       display: block;
     }
 
+    .tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      border-bottom: 1px solid rgba(36, 92, 61, 0.24);
+    }
+
+    .tab {
+      appearance: none;
+      border: 1px solid rgba(36, 92, 61, 0.22);
+      border-bottom: 0;
+      background: rgba(255, 253, 247, 0.74);
+      color: var(--muted);
+      min-height: 42px;
+      padding: 0 18px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .tab[aria-selected="true"] {
+      background: var(--paper);
+      color: var(--green);
+      box-shadow: 0 -3px 0 var(--ochre) inset;
+    }
+
+    .tab:focus-visible {
+      outline: 3px solid rgba(184, 135, 46, 0.38);
+      outline-offset: 2px;
+    }
+
+    .tab-panel[hidden] {
+      display: none;
+    }
+
     .paper {
       width: min(210mm, 100%);
       min-height: 297mm;
@@ -128,6 +160,170 @@
       box-shadow: 0 22px 80px var(--shadow);
       position: relative;
       overflow: hidden;
+    }
+
+    .survey-dashboard {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      box-shadow: 0 18px 60px var(--shadow);
+      padding: 28px;
+    }
+
+    .survey-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 22px;
+    }
+
+    .survey-head h1 {
+      margin: 0;
+      color: var(--green);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .survey-head p {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .survey-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(88px, 1fr));
+      gap: 8px;
+      min-width: 290px;
+    }
+
+    .stat {
+      border: 1px solid rgba(36, 92, 61, 0.18);
+      background: var(--panel);
+      padding: 12px;
+      min-height: 78px;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--green);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .local-command {
+      margin: 0 0 24px;
+      border-left: 4px solid var(--blue);
+      background: var(--blue-soft);
+      padding: 14px 16px;
+      color: #19384f;
+    }
+
+    .local-command h2,
+    .survey-section h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.25;
+      color: var(--blue);
+    }
+
+    .command-line {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      margin: 8px 0;
+      padding: 10px 12px;
+      background: #ffffff;
+      border: 1px solid rgba(49, 92, 122, 0.24);
+      color: var(--ink);
+      font: 13px/1.5 Menlo, Consolas, monospace;
+      white-space: nowrap;
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .chart-card {
+      margin: 0;
+      border: 1px solid rgba(36, 92, 61, 0.18);
+      background: #ffffff;
+      padding: 12px;
+    }
+
+    .chart-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid rgba(36, 92, 61, 0.12);
+    }
+
+    .chart-card figcaption {
+      margin-top: 9px;
+      color: var(--ink);
+      font-size: 13.5px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .data-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+
+    .csv-status {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .csv-table-wrap {
+      max-height: 620px;
+      overflow: auto;
+      border: 1px solid rgba(36, 92, 61, 0.2);
+      background: #ffffff;
+    }
+
+    .csv-table-wrap table {
+      width: max-content;
+      min-width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      line-height: 1.42;
+    }
+
+    .csv-table-wrap th,
+    .csv-table-wrap td {
+      max-width: 360px;
+      border: 1px solid rgba(36, 92, 61, 0.16);
+      padding: 8px 9px;
+      text-align: left;
+      vertical-align: top;
+      white-space: normal;
+    }
+
+    .csv-table-wrap th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--green-soft);
+      color: var(--green);
+      font-weight: 750;
     }
 
     .paper::before {
@@ -388,6 +584,18 @@
       .cover h1 {
         margin-top: 22mm;
       }
+
+      .survey-head {
+        grid-template-columns: 1fr;
+      }
+
+      .survey-stats {
+        min-width: 0;
+      }
+
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media print {
@@ -401,7 +609,9 @@
       }
 
       .topbar,
-      .actions {
+      .tabs,
+      .local-command,
+      .data-actions {
         display: none;
       }
 
@@ -428,16 +638,145 @@
           <strong>Bài luận Markdown</strong>
         </div>
       </div>
-      <nav class="actions" aria-label="Thao tác">
-        <a class="action" id="openMarkdown" href="luan_van_full.md">Mở Markdown</a>
-        <button class="action" id="reloadButton" type="button">Tải lại</button>
-        <button class="action" type="button" onclick="window.print()">In</button>
-      </nav>
     </header>
 
-    <section class="stage">
+    <nav class="tabs" role="tablist" aria-label="Nội dung trang">
+      <button class="tab" id="reportTab" type="button" role="tab" aria-selected="true" aria-controls="reportPanel" data-tab-target="report">Xem báo cáo</button>
+      <button class="tab" id="surveyTab" type="button" role="tab" aria-selected="false" aria-controls="surveyPanel" data-tab-target="survey">Xem khảo sát</button>
+      <button class="tab" id="fakeSurveyTab" type="button" role="tab" aria-selected="false" aria-controls="fakeSurveyPanel" data-tab-target="fakeSurvey">Khảo sát Fake</button>
+    </nav>
+
+    <section class="stage tab-panel" id="reportPanel" role="tabpanel" aria-labelledby="reportTab" data-tab-panel="report">
       <article class="paper">
         <div class="document" id="content" aria-live="polite"></div>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="surveyPanel" role="tabpanel" aria-labelledby="surveyTab" data-tab-panel="survey" hidden>
+      <article class="survey-dashboard">
+        <header class="survey-head">
+          <div>
+            <h1>Khảo sát du lịch nông nghiệp xanh Củ Chi</h1>
+            <p>Dữ liệu khảo sát gồm phân phối mẫu, phân phối thang đo Likert, điểm trung bình theo câu hỏi, mức ủng hộ giải pháp và câu trả lời mở.</p>
+          </div>
+          <div class="survey-stats" aria-label="Tổng quan dữ liệu khảo sát">
+            <div class="stat"><strong>41</strong><span>câu trả lời</span></div>
+            <div class="stat"><strong>31</strong><span>câu hỏi thang đo</span></div>
+            <div class="stat"><strong>6</strong><span>biểu đồ</span></div>
+          </div>
+        </header>
+
+        <section class="local-command" aria-labelledby="localServerTitle">
+          <h2 id="localServerTitle">Chạy local server</h2>
+          <code class="command-line">python3 -m http.server 8001</code>
+          <code class="command-line">http://localhost:8001/</code>
+        </section>
+
+        <section class="survey-section" aria-labelledby="chartTitle">
+          <h2 id="chartTitle">Visualization</h2>
+          <div class="chart-grid">
+            <figure class="chart-card">
+              <img src="charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/01_phan_phoi_mau_khao_sat.png" alt="Phân phối mẫu khảo sát" loading="lazy">
+              <figcaption>Phân phối mẫu khảo sát</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/02_phan_phoi_likert_q8_q38.png" alt="Phân phối mức độ đồng ý theo câu hỏi Q8-Q38" loading="lazy">
+              <figcaption>Phân phối mức độ đồng ý theo câu hỏi Q8-Q38</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/03_diem_trung_binh_theo_cau_hoi.png" alt="Điểm trung bình theo câu hỏi" loading="lazy">
+              <figcaption>Điểm trung bình theo câu hỏi</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/04_so_sanh_theo_nhom_noi_dung.png" alt="So sánh kết quả theo nhóm nội dung" loading="lazy">
+              <figcaption>So sánh kết quả theo nhóm nội dung</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/05_muc_ung_ho_giai_phap_de_xuat.png" alt="Mức ủng hộ các giải pháp đề xuất" loading="lazy">
+              <figcaption>Mức ủng hộ các giải pháp đề xuất</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/06_phan_tich_cau_hoi_mo.png" alt="Phân tích câu trả lời mở" loading="lazy">
+              <figcaption>Phân tích câu trả lời mở</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="survey-section" aria-labelledby="csvTitle">
+          <h2 id="csvTitle">Dữ liệu câu trả lời</h2>
+          <div class="data-actions">
+            <a class="action" href="charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/du_lieu_cau_tra_loi_khao_sat.csv">Tải CSV câu trả lời</a>
+            <a class="action" href="charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/bang_tom_tat_likert_q8_q38.csv">Tải bảng tóm tắt Likert</a>
+          </div>
+          <p class="csv-status" id="csvStatus">Đang tải dữ liệu CSV...</p>
+          <div class="csv-table-wrap" aria-live="polite">
+            <table id="surveyTable"></table>
+          </div>
+        </section>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="fakeSurveyPanel" role="tabpanel" aria-labelledby="fakeSurveyTab" data-tab-panel="fakeSurvey" hidden>
+      <article class="survey-dashboard">
+        <header class="survey-head">
+          <div>
+            <h1>Khảo sát Fake 241 mẫu</h1>
+            <p>Bộ dữ liệu mô phỏng gồm 41 câu trả lời thật và 200 câu trả lời fake được sinh từ phân phối câu trả lời thật. Các biểu đồ bên dưới dùng toàn bộ 241 mẫu.</p>
+          </div>
+          <div class="survey-stats" aria-label="Tổng quan dữ liệu khảo sát fake">
+            <div class="stat"><strong>241</strong><span>câu trả lời</span></div>
+            <div class="stat"><strong>200</strong><span>dòng fake</span></div>
+            <div class="stat"><strong>6</strong><span>biểu đồ</span></div>
+          </div>
+        </header>
+
+        <section class="local-command" aria-labelledby="fakeLocalServerTitle">
+          <h2 id="fakeLocalServerTitle">Chạy local server</h2>
+          <code class="command-line">python3 -m http.server 8001</code>
+          <code class="command-line">http://localhost:8001/#khao-sat-fake</code>
+        </section>
+
+        <section class="survey-section" aria-labelledby="fakeChartTitle">
+          <h2 id="fakeChartTitle">Visualization 241 mẫu</h2>
+          <div class="chart-grid">
+            <figure class="chart-card">
+              <img src="charts/khao_sat_fake_241/01_phan_phoi_mau_khao_sat.png" alt="Phân phối mẫu khảo sát fake 241 mẫu" loading="lazy">
+              <figcaption>Phân phối mẫu khảo sát 241 mẫu</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_fake_241/02_phan_phoi_likert_q8_q38.png" alt="Phân phối mức độ đồng ý fake theo câu hỏi Q8-Q38" loading="lazy">
+              <figcaption>Phân phối mức độ đồng ý theo câu hỏi Q8-Q38</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_fake_241/03_diem_trung_binh_theo_cau_hoi.png" alt="Điểm trung bình fake theo câu hỏi" loading="lazy">
+              <figcaption>Điểm trung bình theo câu hỏi</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_fake_241/04_so_sanh_theo_nhom_noi_dung.png" alt="So sánh kết quả fake theo nhóm nội dung" loading="lazy">
+              <figcaption>So sánh kết quả theo nhóm nội dung</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_fake_241/05_muc_ung_ho_giai_phap_de_xuat.png" alt="Mức ủng hộ fake các giải pháp đề xuất" loading="lazy">
+              <figcaption>Mức ủng hộ các giải pháp đề xuất</figcaption>
+            </figure>
+            <figure class="chart-card">
+              <img src="charts/khao_sat_fake_241/06_phan_tich_cau_hoi_mo.png" alt="Phân tích câu trả lời mở fake" loading="lazy">
+              <figcaption>Phân tích câu trả lời mở</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="survey-section" aria-labelledby="fakeCsvTitle">
+          <h2 id="fakeCsvTitle">Dữ liệu câu trả lời 241 mẫu</h2>
+          <div class="data-actions">
+            <a class="action" href="charts/khao_sat_fake_241/du_lieu_cau_tra_loi_khao_sat_fake_241.csv">Tải CSV 241 mẫu</a>
+            <a class="action" href="charts/khao_sat_fake_241/bang_tom_tat_likert_q8_q38.csv">Tải bảng tóm tắt Likert</a>
+          </div>
+          <p class="csv-status" id="fakeCsvStatus">Đang tải dữ liệu CSV...</p>
+          <div class="csv-table-wrap" aria-live="polite">
+            <table id="fakeSurveyTable"></table>
+          </div>
+        </section>
       </article>
     </section>
   </main>
@@ -446,10 +785,22 @@
     const params = new URLSearchParams(window.location.search);
     const markdownFile = params.get("file") || "luan_van_full.md";
     const content = document.getElementById("content");
-    const openMarkdown = document.getElementById("openMarkdown");
-    const reloadButton = document.getElementById("reloadButton");
-
-    openMarkdown.href = markdownFile;
+    const tabButtons = Array.from(document.querySelectorAll("[data-tab-target]"));
+    const tabPanels = Array.from(document.querySelectorAll("[data-tab-panel]"));
+    const csvConfigs = {
+      survey: {
+        table: document.getElementById("surveyTable"),
+        status: document.getElementById("csvStatus"),
+        file: "charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/du_lieu_cau_tra_loi_khao_sat.csv",
+        loaded: false,
+      },
+      fakeSurvey: {
+        table: document.getElementById("fakeSurveyTable"),
+        status: document.getElementById("fakeCsvStatus"),
+        file: "charts/khao_sat_fake_241/du_lieu_cau_tra_loi_khao_sat_fake_241.csv",
+        loaded: false,
+      },
+    };
 
     function escapeHtml(value) {
       return value
@@ -602,6 +953,109 @@
       return html.join("\n");
     }
 
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let field = "";
+      let inQuotes = false;
+      const source = text.replace(/^\uFEFF/, "");
+
+      for (let index = 0; index < source.length; index += 1) {
+        const char = source[index];
+        const next = source[index + 1];
+
+        if (char === '"') {
+          if (inQuotes && next === '"') {
+            field += '"';
+            index += 1;
+          } else {
+            inQuotes = !inQuotes;
+          }
+          continue;
+        }
+
+        if (char === "," && !inQuotes) {
+          row.push(field);
+          field = "";
+          continue;
+        }
+
+        if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") {
+            index += 1;
+          }
+          row.push(field);
+          if (row.some((cell) => cell.length > 0)) {
+            rows.push(row);
+          }
+          row = [];
+          field = "";
+          continue;
+        }
+
+        field += char;
+      }
+
+      row.push(field);
+      if (row.some((cell) => cell.length > 0)) {
+        rows.push(row);
+      }
+      return rows;
+    }
+
+    function renderCsvTable(rows, config) {
+      if (!rows.length) {
+        config.table.innerHTML = "";
+        config.status.textContent = "Không có dữ liệu CSV.";
+        return;
+      }
+
+      const [headers, ...bodyRows] = rows;
+      const columnCount = headers.length;
+      const normalize = (row) => Array.from({ length: columnCount }, (_, index) => row[index] || "");
+      const head = normalize(headers)
+        .map((cell) => `<th>${escapeHtml(cell)}</th>`)
+        .join("");
+      const body = bodyRows
+        .map((row) => `<tr>${normalize(row).map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`)
+        .join("");
+
+      config.table.innerHTML = `<thead><tr>${head}</tr></thead><tbody>${body}</tbody>`;
+      config.status.textContent = `${bodyRows.length} dòng dữ liệu, ${columnCount} cột.`;
+    }
+
+    async function loadCsvData(tabName) {
+      const config = csvConfigs[tabName];
+      if (!config || config.loaded) return;
+
+      try {
+        const response = await fetch(config.file, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const csv = await response.text();
+        renderCsvTable(parseCsv(csv), config);
+        config.loaded = true;
+      } catch (error) {
+        config.status.innerHTML = `Không tải được CSV. Chạy trang qua server nội bộ rồi mở <code>${escapeHtml(config.file)}</code>.`;
+      }
+    }
+
+    function activateTab(tabName) {
+      tabButtons.forEach((button) => {
+        const selected = button.dataset.tabTarget === tabName;
+        button.setAttribute("aria-selected", selected ? "true" : "false");
+      });
+
+      tabPanels.forEach((panel) => {
+        panel.hidden = panel.dataset.tabPanel !== tabName;
+      });
+
+      if (csvConfigs[tabName]) {
+        loadCsvData(tabName);
+      }
+    }
+
     async function loadMarkdown() {
       content.innerHTML = "";
 
@@ -623,7 +1077,17 @@
       }
     }
 
-    reloadButton.addEventListener("click", loadMarkdown);
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", () => activateTab(button.dataset.tabTarget));
+    });
+
+    if (window.location.hash === "#khao-sat-fake" || window.location.hash === "#fake-survey") {
+      activateTab("fakeSurvey");
+    } else if (window.location.hash === "#khao-sat" || window.location.hash === "#survey") {
+      activateTab("survey");
+    } else {
+      activateTab("report");
+    }
     loadMarkdown();
   </script>
 </body>
