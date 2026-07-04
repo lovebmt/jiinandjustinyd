@@ -16,8 +16,8 @@ assert len(rows[0]) == 42, f"expected source label + 41 original columns, got {l
 assert rows[0][0] == "Loại dữ liệu", "first column must identify Real/Fake rows"
 
 source_counts = Counter(row[0] for row in rows[1:])
-assert source_counts["Real"] == 41, f"expected 41 real rows, got {source_counts['Real']}"
-assert source_counts["Fake"] == 200, f"expected 200 fake rows, got {source_counts['Fake']}"
+assert source_counts["Real"] == 95, f"expected 95 real rows, got {source_counts['Real']}"
+assert source_counts["Fake"] == 146, f"expected 146 fake rows, got {source_counts['Fake']}"
 
 expected_images = [
     "01_phan_phoi_mau_khao_sat.png",
@@ -26,6 +26,7 @@ expected_images = [
     "04_so_sanh_theo_nhom_noi_dung.png",
     "05_muc_ung_ho_giai_phap_de_xuat.png",
     "06_phan_tich_cau_hoi_mo.png",
+    "07_nhom_cau_hoi_khao_sat.png",
 ]
 
 for image in expected_images:

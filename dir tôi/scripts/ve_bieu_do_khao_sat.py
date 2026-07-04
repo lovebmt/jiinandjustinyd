@@ -19,6 +19,7 @@ import numpy as np
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 REAL_OUT_DIR = ROOT_DIR / "charts" / "khao_sat_du_lich_nong_nghiep_xanh_cu_chi"
+FAKE_TOTAL_RESPONSES = 241
 FAKE_OUT_DIR = ROOT_DIR / "charts" / "khao_sat_fake_241"
 CURRENT_OUT_DIR = REAL_OUT_DIR
 REAL_OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -522,6 +523,67 @@ def draw_open_answers(headers: list[str], data: list[list[str]]) -> Path:
     return save(fig, "06_phan_tich_cau_hoi_mo.png")
 
 
+def draw_question_group_chart() -> Path:
+    groups = [
+        ("1-7", "Đặc điểm mẫu khảo sát"),
+        ("8-25", "Đánh giá thực trạng"),
+        ("26-31", "Phân tích nguyên nhân"),
+        ("32-38", "Căn cứ lựa chọn giải pháp"),
+        ("39-40", "Minh chứng định tính"),
+    ]
+
+    fig, ax = plt.subplots(figsize=(13.2, 7.2))
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+
+    fig.suptitle(
+        "Biểu đồ 7. Cấu trúc nhóm câu hỏi khảo sát",
+        fontsize=15,
+        fontweight="bold",
+        y=0.965,
+    )
+
+    left_x = 0.08
+    right_x = 0.48
+    top = 0.84
+    row_height = 0.135
+    line_color = "#E5EAE5"
+    range_color = "#263238"
+    label_color = "#17211B"
+
+    for index, (question_range, purpose) in enumerate(groups):
+        y_top = top - index * row_height
+        y_mid = y_top - row_height / 2
+        ax.hlines(y_top, 0.05, 0.95, color=line_color, linewidth=1.35)
+        ax.text(
+            left_x,
+            y_mid,
+            question_range,
+            ha="left",
+            va="center",
+            fontsize=24,
+            color=range_color,
+            fontweight="normal",
+        )
+        ax.text(
+            right_x,
+            y_mid,
+            purpose,
+            ha="left",
+            va="center",
+            fontsize=24,
+            color=label_color,
+            fontweight="normal",
+        )
+
+    ax.hlines(top - len(groups) * row_height, 0.05, 0.95, color=line_color, linewidth=1.35)
+    ax.vlines(0.39, top - len(groups) * row_height, top, color="#F1F4F1", linewidth=1)
+    add_source(fig, "Nguồn: Tác giả tổng hợp từ cấu trúc bảng hỏi khảo sát, 2026.")
+    fig.tight_layout(rect=[0, 0.035, 1, 0.92])
+    return save(fig, "07_nhom_cau_hoi_khao_sat.png")
+
+
 def set_output_dir(path: Path) -> None:
     global CURRENT_OUT_DIR
     CURRENT_OUT_DIR = path
@@ -721,6 +783,7 @@ def generate_chart_bundle(headers: list[str], data: list[list[str]], raw_csv_pat
         draw_section_scores(summary),
         draw_solution_support(summary),
         draw_open_answers(headers, data),
+        draw_question_group_chart(),
     ]
     csv_path = write_csv_summary(summary)
     report_path = write_report(image_paths, csv_path, raw_csv_path, len(data))
@@ -738,7 +801,10 @@ def main() -> None:
     raw_xlsx_path = write_xlsx(headers, data, "du_lieu_cau_tra_loi_khao_sat.xlsx")
     image_paths, csv_path, report_path = generate_chart_bundle(headers, data, raw_csv_path)
 
-    fake_data = generate_fake_rows(data, 200)
+    fake_count = FAKE_TOTAL_RESPONSES - len(data)
+    if fake_count < 0:
+        raise ValueError(f"Real response count {len(data)} exceeds fake total target {FAKE_TOTAL_RESPONSES}.")
+    fake_data = generate_fake_rows(data, fake_count)
     combined_data = data + fake_data
     set_output_dir(FAKE_OUT_DIR)
     fake_raw_csv_path = write_labeled_responses_csv(headers, data, fake_data)

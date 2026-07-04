@@ -28,9 +28,13 @@ assert(html.includes('id="fakeSurveyPanel"'), "homepage must include fake survey
   "04_so_sanh_theo_nhom_noi_dung.png",
   "05_muc_ung_ho_giai_phap_de_xuat.png",
   "06_phan_tich_cau_hoi_mo.png",
+  "07_nhom_cau_hoi_khao_sat.png",
 ].forEach((image) => {
   assert(html.includes(image), `survey panel must show ${image}`);
 });
+
+const chartCountBadges = html.match(/<strong>7<\/strong><span>biểu đồ<\/span>/g) || [];
+assert(chartCountBadges.length >= 2, "real and fake survey stats must show 7 charts");
 
 assert(
   html.includes("du_lieu_cau_tra_loi_khao_sat.csv"),
@@ -48,6 +52,9 @@ assert(
   html.includes("du_lieu_cau_tra_loi_khao_sat_fake_241.xlsx"),
   "fake survey panel must include Excel download for fake responses"
 );
+assert(html.includes("<strong>95</strong><span>câu trả lời</span>"), "real survey stats must show 95 responses");
+assert(html.includes("<strong>241</strong><span>câu trả lời</span>"), "fake survey stats must show 241 responses");
+assert(html.includes("<strong>146</strong><span>dòng fake</span>"), "fake survey stats must show 146 fake responses");
 assert(html.includes("Tải Excel"), "survey panels must expose Excel download buttons");
 assert(html.includes("function parseCsv"), "homepage must include CSV parser");
 assert(html.includes("function activateTab"), "homepage must include tab switching behavior");

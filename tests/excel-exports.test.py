@@ -21,5 +21,5 @@ def count_sheet_rows(path: Path) -> int:
 real_xlsx = Path("charts/khao_sat_du_lich_nong_nghiep_xanh_cu_chi/du_lieu_cau_tra_loi_khao_sat.xlsx")
 fake_xlsx = Path("charts/khao_sat_fake_241/du_lieu_cau_tra_loi_khao_sat_fake_241.xlsx")
 
-assert count_sheet_rows(real_xlsx) == 42, "real Excel must contain header + 41 responses"
+assert count_sheet_rows(real_xlsx) == 96, "real Excel must contain header + 95 responses"
 assert count_sheet_rows(fake_xlsx) == 242, "fake Excel must contain header + 241 responses"
