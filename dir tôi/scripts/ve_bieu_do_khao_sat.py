@@ -57,6 +57,14 @@ SECTION_RANGES = [
     ("Giải pháp đề xuất", 32, 38, "#5D4037"),
 ]
 
+QUESTION_GROUPS = [
+    ("1-7", "Đặc điểm mẫu khảo sát", 7, "#2E7D32"),
+    ("8-25", "Đánh giá thực trạng", 18, "#1565C0"),
+    ("26-31", "Phân tích nguyên nhân", 6, "#EF6C00"),
+    ("32-38", "Căn cứ lựa chọn giải pháp", 7, "#5D4037"),
+    ("39-40", "Minh chứng định tính", 2, "#7B1FA2"),
+]
+
 
 def q(ns: str, tag: str) -> str:
     return f"{{{NS[ns]}}}{tag}"
@@ -524,63 +532,47 @@ def draw_open_answers(headers: list[str], data: list[list[str]]) -> Path:
 
 
 def draw_question_group_chart() -> Path:
-    groups = [
-        ("1-7", "Đặc điểm mẫu khảo sát"),
-        ("8-25", "Đánh giá thực trạng"),
-        ("26-31", "Phân tích nguyên nhân"),
-        ("32-38", "Căn cứ lựa chọn giải pháp"),
-        ("39-40", "Minh chứng định tính"),
-    ]
+    total_questions = sum(item[2] for item in QUESTION_GROUPS)
+    labels = [wrap_label(f"{item[0]}: {item[1]}", 34) for item in QUESTION_GROUPS]
+    counts = [item[2] for item in QUESTION_GROUPS]
+    shares = [count / total_questions * 100 for count in counts]
+    colors = [item[3] for item in QUESTION_GROUPS]
+    y = np.arange(len(QUESTION_GROUPS))
 
-    fig, ax = plt.subplots(figsize=(13.2, 7.2))
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-    ax.axis("off")
+    fig, axes = plt.subplots(1, 2, figsize=(15.5, 7.2), gridspec_kw={"width_ratios": [1.1, 1]})
+
+    axes[0].barh(y, counts, color=colors, height=0.56)
+    axes[0].set_yticks(y)
+    axes[0].set_yticklabels(labels, fontsize=10)
+    axes[0].invert_yaxis()
+    axes[0].set_xlim(0, max(counts) * 1.25)
+    axes[0].set_xlabel("Số câu hỏi")
+    axes[0].set_title("Số câu hỏi theo nhóm", fontweight="bold", loc="left")
+    for yi, count in zip(y, counts):
+        axes[0].text(count + 0.25, yi, f"{count}", va="center", fontweight="bold", color="#263238")
+
+    axes[1].barh(y, shares, color=colors, height=0.56)
+    axes[1].set_yticks(y)
+    axes[1].set_yticklabels([])
+    axes[1].invert_yaxis()
+    axes[1].set_xlim(0, max(shares) * 1.25)
+    axes[1].set_xlabel("Tỷ trọng trong bảng hỏi (%)")
+    axes[1].set_title("Tỷ trọng theo mục đích phân tích", fontweight="bold", loc="left")
+    for yi, share in zip(y, shares):
+        axes[1].text(share + 0.8, yi, f"{share:.1f}%", va="center", fontweight="bold", color="#263238")
+
+    for ax in axes:
+        ax.grid(axis="x", linestyle="--", alpha=0.28)
+        for spine in ("top", "right", "left"):
+            ax.spines[spine].set_visible(False)
 
     fig.suptitle(
-        "Biểu đồ 7. Cấu trúc nhóm câu hỏi khảo sát",
+        "Biểu đồ 7. Cơ cấu nhóm câu hỏi khảo sát theo mục đích phân tích",
         fontsize=15,
         fontweight="bold",
-        y=0.965,
     )
-
-    left_x = 0.08
-    right_x = 0.48
-    top = 0.84
-    row_height = 0.135
-    line_color = "#E5EAE5"
-    range_color = "#263238"
-    label_color = "#17211B"
-
-    for index, (question_range, purpose) in enumerate(groups):
-        y_top = top - index * row_height
-        y_mid = y_top - row_height / 2
-        ax.hlines(y_top, 0.05, 0.95, color=line_color, linewidth=1.35)
-        ax.text(
-            left_x,
-            y_mid,
-            question_range,
-            ha="left",
-            va="center",
-            fontsize=24,
-            color=range_color,
-            fontweight="normal",
-        )
-        ax.text(
-            right_x,
-            y_mid,
-            purpose,
-            ha="left",
-            va="center",
-            fontsize=24,
-            color=label_color,
-            fontweight="normal",
-        )
-
-    ax.hlines(top - len(groups) * row_height, 0.05, 0.95, color=line_color, linewidth=1.35)
-    ax.vlines(0.39, top - len(groups) * row_height, top, color="#F1F4F1", linewidth=1)
     add_source(fig, "Nguồn: Tác giả tổng hợp từ cấu trúc bảng hỏi khảo sát, 2026.")
-    fig.tight_layout(rect=[0, 0.035, 1, 0.92])
+    fig.tight_layout(rect=[0, 0.04, 1, 0.92])
     return save(fig, "07_nhom_cau_hoi_khao_sat.png")
 
 
@@ -604,6 +596,17 @@ def write_csv_summary(summary: list[dict[str, object]]) -> Path:
                 f"{item['n']},"
                 f"\"{question}\"\n"
             )
+    return path
+
+
+def write_question_group_summary() -> Path:
+    path = CURRENT_OUT_DIR / "bang_nhom_cau_hoi_khao_sat.csv"
+    total_questions = sum(item[2] for item in QUESTION_GROUPS)
+    with path.open("w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["range", "group", "question_count", "share_pct"])
+        for question_range, group, question_count, _ in QUESTION_GROUPS:
+            writer.writerow([question_range, group, question_count, f"{question_count / total_questions * 100:.4f}"])
     return path
 
 
@@ -786,6 +789,7 @@ def generate_chart_bundle(headers: list[str], data: list[list[str]], raw_csv_pat
         draw_question_group_chart(),
     ]
     csv_path = write_csv_summary(summary)
+    write_question_group_summary()
     report_path = write_report(image_paths, csv_path, raw_csv_path, len(data))
     return image_paths, csv_path, report_path
 
